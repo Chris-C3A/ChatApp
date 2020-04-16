@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="message_holder">
+        <!-- {% if messages %}
+            <h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
+        {% endif %} -->
+        {% for msg in messages %}
+            {% if msg.data %}
+                <div>User Connected</div>
+            {% else %}
+                <div><b style="color:#000">{{msg.user_name}}</b>: {{msg.message}}</div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <!-- <form action="" method="POST">
+        <input type="text" class="username" placeholder="User Name"/>
+        <input type="text" class="message" placeholder="Messages"/>
+        <input type="submit"/>
+    </form> -->
+
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+
+        {% if form.username.errors %}
+            {{ form.username(class="username", placeholder="username") }}
+            <div class="invalid-feedback">
+                {% for error in form.username.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.username(class="username", placeholder="username") }}
+        {% endif %}
+
+        {% if form.message.errors %}
+            {{ form.message(class="message", placeholder="message") }}
+            <div class="invalid-feedback">
+                {% for error in form.message.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{ form.message(class="message", placeholder="message", autocomplete="off") }}
+        {% endif %}
+
+        {{ form.submit() }}
+
+    </form>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='js/client.js') }}" type="text/javascript" charset="utf-8"></script>
+{% endblock %}
