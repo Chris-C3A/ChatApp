@@ -1,5 +1,5 @@
-from chatapp import app, socketio, bcrypt
-from flask import Flask, render_template, redirect, url_for
+from chatapp import app, socketio, bcrypt, db
+from flask import Flask, render_template, redirect, url_for, flash, request
 from chatapp.src.forms import MessageForm, LoginForm, RegisterForm
 from chatapp.src.models import User, ChatSchema
 from flask_login import login_user, current_user, logout_user, login_required
@@ -37,7 +37,7 @@ def login():
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
             flash(f'Logged in as {form.username_email.data}!', 'success')
-            return redirect(next_page) if next_page else  redirect(url_for('index'))
+            return redirect(next_page) if next_page else  redirect(url_for('chat'))
 
         flash(f'Incorrect Email or Password! Please try again.', 'danger')
 
@@ -49,8 +49,12 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+@app.route('/reset_request')
+def reset_request():
+    pass
+
 @app.route('/chat/general')
-# @login_required TODO
+@login_required
 def chat():
     # add login form
     form = MessageForm()
