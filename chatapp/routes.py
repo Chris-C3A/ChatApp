@@ -53,7 +53,7 @@ def logout():
 def reset_request():
     pass
 
-@app.route('/chat/general')
+@app.route('/chat/general', methods=['POST', 'GET'])
 @login_required
 def chat():
     # add login form
