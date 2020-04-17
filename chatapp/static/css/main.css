@@ -1,6 +1,11 @@
 .custom-form {
   width: 60%;
   margin: 0 auto;
-  margin-top: 80px;
+  margin-top: 40px;
 }
 
+.flash-msgs {
+  width: 60%;
+  margin: 0 auto;
+  margin-top: 80px;
+}
