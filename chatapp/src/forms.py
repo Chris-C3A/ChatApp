@@ -7,7 +7,6 @@ import re
 
 class MessageForm(FlaskForm):
     message = StringField("", validators=[DataRequired()])
-    username = StringField("", validators=[DataRequired()])
     submit = SubmitField("Send")
 
 class RegisterForm(FlaskForm):

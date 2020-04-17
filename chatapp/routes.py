@@ -76,6 +76,7 @@ def messageReceived(methods=['GET', 'POST']):
 
 @socketio.on('my event')
 def handle_my_custom_event(json, methods=['GET', 'POST']):
+    json['user_name'] = current_user.username
     print('received my event: ' + str(json))
     if "message" in json.keys():
         messages.append(json)

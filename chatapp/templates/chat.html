@@ -23,17 +23,6 @@
     <form method="POST" action="">
         {{ form.hidden_tag() }}
 
-        {% if form.username.errors %}
-            {{ form.username(class="username", placeholder="username") }}
-            <div class="invalid-feedback">
-                {% for error in form.username.errors %}
-                    <span>{{ error }}</span>
-                {% endfor %}
-            </div>
-        {% else %}
-            {{ form.username(class="username", placeholder="username") }}
-        {% endif %}
-
         {% if form.message.errors %}
             {{ form.message(class="message", placeholder="message") }}
             <div class="invalid-feedback">
