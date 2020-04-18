@@ -1,6 +1,8 @@
 let socket = io.connect('http://' + document.domain + ':' + location.port);
+console.info('socket connected')
 
 socket.on( 'connect', () => {
+    console.info('socket on connect')
     // socket.emit( 'my event', {
     //     data: 'User Connected'
     // })
