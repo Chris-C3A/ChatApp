@@ -1,4 +1,7 @@
-let socket = io.connect('https://' + document.domain + ':' + location.port);
+var origin = window.location.origin;
+console.info(origin);
+// let socket = io.connect('http://' + document.domain + ':' + location.port);
+let socket = io.connect(origin);
 console.info('socket connected kis emak')
 
 socket.on( 'connect', () => {
