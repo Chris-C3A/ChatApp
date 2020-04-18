@@ -1,4 +1,4 @@
-let socket = io.connect('http://' + document.domain + ':' + location.port);
+let socket = io.connect('https://' + document.domain + ':' + location.port);
 
 socket.on( 'connect', () => {
     // socket.emit( 'my event', {
