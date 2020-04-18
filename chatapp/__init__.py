@@ -7,7 +7,6 @@ from chatapp.src.config import Config
 
 app = Flask(__name__)
 socketio = SocketIO(app)
-socketio.init_app(app, cors_allowed_origins="*")
 
 app.config.from_object(Config)
 
