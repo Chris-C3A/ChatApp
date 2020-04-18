@@ -1,5 +1,5 @@
 let socket = io.connect('https://' + document.domain + ':' + location.port);
-console.info('socket connected')
+console.info('socket connected kis emak')
 
 socket.on( 'connect', () => {
     console.info('socket on connect')
