@@ -1,4 +1,4 @@
-let socket = io.connect('http://' + document.domain + ':' + location.port);
+let socket = io.connect('http://localhost:5000');
 console.info('socket connected')
 
 socket.on( 'connect', () => {
