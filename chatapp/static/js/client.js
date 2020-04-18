@@ -1,4 +1,4 @@
-let socket = io.connect('https://zebe-chatapp.herokuapp.com/');
+let socket = io.connect('https://' + document.domain + ':' + location.port);
 console.info('socket connected')
 
 socket.on( 'connect', () => {
