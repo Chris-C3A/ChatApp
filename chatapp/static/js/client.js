@@ -1,4 +1,6 @@
-let socket = io.connect('http://' + document.domain + ':' + location.port);
+var origin = window.location.origin;
+console.info(origin);
+let socket = io.connect(origin);
 
 socket.on( 'connect', () => {
     // socket.emit( 'my event', {
@@ -8,7 +10,7 @@ socket.on( 'connect', () => {
         e.preventDefault()
         let user_input = $( 'input.message' ).val()
         socket.emit( 'my event', {
-        message : user_input
+            message : user_input
         })
         $( 'input.message' ).val( '' ).focus()
     })

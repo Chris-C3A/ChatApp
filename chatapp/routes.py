@@ -53,7 +53,7 @@ def logout():
 def reset_request():
     pass
 
-@app.route('/chat/general')
+@app.route('/chat/general', methods=["POST", "GET"])
 @login_required
 def chat():
     # add login form
@@ -81,9 +81,3 @@ def handle_my_custom_event(json, methods=['GET', 'POST']):
     if "message" in json.keys():
         messages.append(json)
     socketio.emit('my response', json, callback=messageReceived)
-
-
-
-
-
-
