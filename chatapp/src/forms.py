@@ -24,6 +24,8 @@ class RegisterForm(FlaskForm):
         user = User.query.filter_by(username=username.data).first()
         if user:
             raise ValidationError('Username taken!')
+        if " " in username.data:
+            raise ValidationError('Usernames cannot contain spaces!')
 
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
@@ -41,4 +43,3 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired(), length(min=8)])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
-

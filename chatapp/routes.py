@@ -4,11 +4,10 @@ from chatapp.src.forms import MessageForm, LoginForm, RegisterForm
 from chatapp.src.models import User, ChatSchema
 from flask_login import login_user, current_user, logout_user, login_required
 
-messages = []
-
 @app.route('/')
 def index():
     return render_template('index.html', title='home')
+
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
@@ -26,6 +25,7 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', listForms=listForms, form=form)
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -41,26 +41,29 @@ def login():
 
         flash(f'Incorrect Email or Password! Please try again.', 'danger')
 
-
     return render_template('login.html', title='Login', form=form)
+
 
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('index'))
 
+
 @app.route('/reset_request')
 def reset_request():
     pass
 
+
 @app.route('/chat/general', methods=["POST", "GET"])
 @login_required
 def chat():
-    # add login form
+    messages = ChatSchema.query.order_by(ChatSchema.time_sent)
     form = MessageForm()
     if form.validate_on_submit():
         print('message sent!')
     return render_template('chat.html', messages=messages, form=form, title='general')
+
 
 # TODO
 # @app.route('/chat/<room_id>')
@@ -74,10 +77,14 @@ def chat():
 def messageReceived(methods=['GET', 'POST']):
     print('message was received!!!')
 
+# WebSockets
 @socketio.on('my event')
 def handle_my_custom_event(json, methods=['GET', 'POST']):
     json['user_name'] = current_user.username
     print('received my event: ' + str(json))
     if "message" in json.keys():
-        messages.append(json)
+        newMessage = ChatSchema(author=current_user, message=json['message'])
+        db.session.add(newMessage)
+        db.session.commit()
+        # messages.append(json)
     socketio.emit('my response', json, callback=messageReceived)

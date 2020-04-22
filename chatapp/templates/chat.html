@@ -9,7 +9,7 @@
             {% if msg.data %}
                 <div>User Connected</div>
             {% else %}
-                <div><b style="color:#000">{{msg.user_name}}</b>: {{msg.message}}</div>
+                <div><b style="color:#000">{{msg.author.username}}</b>: {{msg.message}}</div>
             {% endif %}
         {% endfor %}
     </div>
