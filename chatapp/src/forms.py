@@ -1,11 +1,12 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, BooleanField, PasswordField
 from wtforms.validators import DataRequired, length, Email, EqualTo, ValidationError
+from chatapp.src.models import User
+import re
 
 
 class MessageForm(FlaskForm):
     message = StringField("", validators=[DataRequired()])
-    username = StringField("", validators=[DataRequired()])
     submit = SubmitField("Send")
 
 class RegisterForm(FlaskForm):

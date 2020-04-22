@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/main.css') }}">
     {% if title %}
         <title>{{ title }} | Chat App</title>
     {% else %}
@@ -11,9 +12,22 @@
     {% endif %}
 </head>
 <body>
-    <div class="container">
-        {% block content %}{% endblock %}
-    </div>
+    <main class="mt-4">
+        <div class="container">
+            <div class="flash-msgs">
+                {% with msgs = get_flashed_messages(with_categories=true) %}
+                    {% if msgs %}
+                        {% for category, msg in msgs %}
+                            <div class="alert alert-{{ category }}">
+                                {{ msg }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+            {% block content %}{% endblock %}
+        </div>
+    </main>
     <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>
