@@ -6,8 +6,8 @@
             <h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
         {% endif %} -->
         {% for msg in messages %}
-            {% if msg.data %}
-                <div>User Connected</div>
+            {% if msg.joined %}
+                <!-- <div>{{msg.author.username}} joined the chat.</div> -->
             {% else %}
                 <div><b style="color:#000">{{msg.author.username}}</b>: {{msg.message}}</div>
             {% endif %}
@@ -20,25 +20,35 @@
         <input type="submit"/>
     </form> -->
 
+    <!-- <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="button">Button</button>
+      </div>
+    </div> -->
+
     <form method="POST" action="">
         {{ form.hidden_tag() }}
 
-        {% if form.message.errors %}
-            {{ form.message(class="message", placeholder="message") }}
-            <div class="invalid-feedback">
-                {% for error in form.message.errors %}
-                    <span>{{ error }}</span>
-                {% endfor %}
-            </div>
-        {% else %}
-            {{ form.message(class="message", placeholder="message", autocomplete="off") }}
-        {% endif %}
-
-        {{ form.submit() }}
+        <div class="input-group mb-3">
+          {% if form.message.errors %}
+              {{ form.message(id="message", class="form-control", placeholder="message") }}
+              <div class="invalid-feedback">
+                  {% for error in form.message.errors %}
+                      <span>{{ error }}</span>
+                  {% endfor %}
+              </div>
+          {% else %}
+              {{ form.message(id="message", class="form-control", placeholder="message") }}
+          {% endif %}
+          <div class="input-group-append">
+            {{ form.submit(class="btn btn-outline-secondary") }}
+          </div>
+        </div>
 
     </form>
+{% endblock %}
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
-    <script src="{{ url_for('static', filename='js/client.js') }}" type="text/javascript" charset="utf-8"></script>
+{% block js %}
+  <script src="{{ url_for('static', filename='js/client.js') }}" type="text/javascript" charset="utf-8"></script>
 {% endblock %}

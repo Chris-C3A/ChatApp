@@ -7,7 +7,7 @@
   <hr class="my-4">
   <p>Register an account or login if you already have one!</p>
   {% if current_user.is_authenticated %}
-    <a class="btn btn-primary btn-lg" href="{{ url_for('chat') }}" role="button">General Chat</a>
+    <a id="generalChat" class="btn btn-primary btn-lg" href="{{ url_for('chat') }}" role="button" onclick="joinChat()">General Chat</a>
   {% else %}
     <a class="btn btn-primary btn-lg" href="{{ url_for('login') }}" role="button">Login</a>
     <a class="btn btn-primary btn-lg" href="{{ url_for('register') }}" role="button">Register</a>

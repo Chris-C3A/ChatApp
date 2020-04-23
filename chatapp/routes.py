@@ -62,6 +62,7 @@ def chat():
     form = MessageForm()
     if form.validate_on_submit():
         print('message sent!')
+        
     return render_template('chat.html', messages=messages, form=form, title='general')
 
 
