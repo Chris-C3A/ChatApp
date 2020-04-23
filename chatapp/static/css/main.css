@@ -9,3 +9,15 @@
   margin: 0 auto;
   margin-top: 80px;
 }
+
+.messageForm {
+  margin: auto;
+  width: 90%;
+  padding: 10px;
+}
+
+.message_holder {
+  margin: auto;
+  width: 90%;
+  padding: 10px;
+}

@@ -29,23 +29,23 @@
 
     <form method="POST" action="">
         {{ form.hidden_tag() }}
-
-        <div class="input-group mb-3">
-          {% if form.message.errors %}
-              {{ form.message(id="message", class="form-control", placeholder="message") }}
-              <div class="invalid-feedback">
-                  {% for error in form.message.errors %}
-                      <span>{{ error }}</span>
-                  {% endfor %}
+        <div class="form-row align-items-center messageForm">
+          <div class="col-8">
+            {% if form.message.errors %}
+                {{ form.message(id="message", class="form-control py-0", placeholder="message") }}
+                <div class="invalid-feedback">
+                    {% for error in form.message.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.message(id="message", class="form-control", placeholder="message") }}
+            {% endif %}
               </div>
-          {% else %}
-              {{ form.message(id="message", class="form-control", placeholder="message") }}
-          {% endif %}
-          <div class="input-group-append">
-            {{ form.submit(class="btn btn-outline-secondary") }}
-          </div>
-        </div>
-
+              <div class="col-auto">
+                {{ form.submit(class="cus-b btn btn-outline-info btn-rounded waves-effect") }}
+              </div>
+            </div>
     </form>
 {% endblock %}
 
