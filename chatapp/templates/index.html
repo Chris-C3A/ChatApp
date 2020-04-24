@@ -5,10 +5,12 @@
   <h1 class="display-4">Welcome!</h1>
   <p class="lead">This is a prototype of an online Chat Application.</p>
   <hr class="my-4">
-  <p>Register an account or login if you already have one!</p>
   {% if current_user.is_authenticated %}
+    <p>Join a chat room or create one yourself!</p>
     <a id="generalChat" class="btn btn-primary btn-lg" href="{{ url_for('chat') }}" role="button" onclick="joinChat()">General Chat</a>
+    <a id="chatRoom" class="btn btn-primary btn-lg" href="{{ url_for('chat') }}" role="button" onclick="joinChat()">Create Chat Room</a>
   {% else %}
+    <p>Register an account or login if you already have one!</p>
     <a class="btn btn-primary btn-lg" href="{{ url_for('login') }}" role="button">Login</a>
     <a class="btn btn-primary btn-lg" href="{{ url_for('register') }}" role="button">Register</a>
   {% endif %}

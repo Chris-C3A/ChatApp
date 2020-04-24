@@ -38,7 +38,7 @@ def login():
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
             flash(f'Logged in as {form.username_email.data}!', 'success')
-            return redirect(next_page) if next_page else  redirect(url_for('chat'))
+            return redirect(next_page) if next_page else  redirect(url_for('index')) # change to chatrooms
 
         flash(f'Incorrect Email or Password! Please try again.', 'danger')
 
@@ -48,6 +48,7 @@ def login():
 @app.route('/logout')
 def logout():
     logout_user()
+    flash(f'You Logged out!', 'danger')
     return redirect(url_for('index'))
 
 
@@ -56,10 +57,11 @@ def reset_request():
     pass
 
 
-@app.route('/chat/general', methods=["POST", "GET"])
+# @app.route('/chat/general', methods=["POST", "GET"])
+@app.route('/chat/1', methods=["POST", "GET"])
 @login_required
 def chat():
-    messages = ChatSchema.query.order_by(ChatSchema.time_sent)
+    messages = ChatSchema.query.order_by(ChatSchema.time_sent).filter_by(room_id=1).all()
     form = MessageForm()
     if form.validate_on_submit():
         print('message sent!')
@@ -68,13 +70,15 @@ def chat():
 
 
 # TODO
-# @app.route('/chat/<room_id>')
-# def index():
-#     # add login form
-#     form = MessageForm()
-#     if form.validate_on_submit():
-#         print('message sent!')
-#     return render_template('index.html', messages=messages, form=form)
+@app.route('/chat/<int:room_id>')
+@login_required
+def room(room_id):
+    messages = ChatSchema.query.order_by(ChatSchema.time_sent).filter_by(room_id=room_id).all()
+    form = MessageForm()
+    if form.validate_on_submit():
+        print('message sent!')
+
+    return render_template('chat.html', messages=messages, form=form, title='room')
 
 def messageReceived(methods=['GET', 'POST']):
     print('message was received!!!')
@@ -85,8 +89,8 @@ def handle_my_custom_event(json, methods=['GET', 'POST']):
     json['user_name'] = current_user.username
     print('received my event: ' + str(json))
     if "message" in json.keys():
-        newMessage = ChatSchema(author=current_user, message=json['message'])
+        newMessage = ChatSchema(author=current_user, message=json['message'], room_id=json['room_id'])
         db.session.add(newMessage)
         db.session.commit()
         # messages.append(json)
-    socketio.emit('my response', json, callback=messageReceived)
+    socketio.emit('chat' + str(json['room_id']), json, callback=messageReceived)

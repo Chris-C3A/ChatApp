@@ -1,27 +1,32 @@
 var origin = window.location.origin;
 console.info(origin);
 let socket = io.connect(origin);
+
 let current_user = $('#current_user').text()
-console.log(current_user)
+
+let url = window.location.href.split('/')
+let room_id = url[url.length - 1]
+console.log(room_id)
 
 socket.on( 'connect', () => {
     let form = $( 'form' ).on( 'submit', function( e ) {
         e.preventDefault()
         let user_input = $( 'input#message' ).val()
         socket.emit( 'my event', {
-            message : user_input
+            message : user_input,
+            room_id: room_id
         })
         $( 'input#message' ).val( '' ).focus()
     })
 })
 
-socket.on( 'my response', ( msg ) => {
+socket.on( 'chat'+room_id.toString(), ( msg ) => {
     let date = dateNow()
     console.log( msg );
     if (msg.joined) {
       $( 'div.message_holder' ).append('<div><i style="color:#000">'+msg.user_name+'</i>' + ' joined the chat' + '</div>' )
     }
-    if (msg.message) {
+    if (msg.message && msg['room_id'] == room_id) {
       if (current_user == msg.user_name) {
         $( 'div.message_holder' ).append('<div class="chat chat-current"><b style="color:#000" class="left">'+ msg.user_name + '</b><p>'+msg.message+'</p><p class="time-left">'+date+'</p></div>' )
       } else {
