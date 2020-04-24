@@ -1,0 +1,4 @@
+{
+    "SECRET_KEY": "fhsh34hasfdh452hfkak2",
+    "DB_DEV_URI": "sqlite:///site.db"
+}

@@ -7,5 +7,113 @@
 .flash-msgs {
   width: 60%;
   margin: 0 auto;
-  margin-top: 80px;
+  margin-top: 40px;
+}
+
+/* .messageForm {
+  margin: auto;
+  width: 90%;
+  padding: 10px;
+} */
+
+.message_holder {
+  margin: auto;
+  width: 100%;
+  padding: 10px;
+}
+
+
+.block {
+  display: block;
+  width: 100%;
+  border: none;
+  background-color: #4CAF50;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.send-btn {
+  display: block;
+  width: 100%;
+  border: none;
+  padding: 6px 10px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.chat {
+  /* position: relative; */
+  /* height: 600px; */
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 0 10px;
+  margin: 10px 0;
+}
+
+/* Darker chat container */
+.chat-darker {
+  border-color: #ccc;
+  background-color: #ddd;
+}
+
+.chat-current {
+  border-color: #ccc;
+  background-color: #add8e6;
+}
+
+/* Clear floats */
+.chat::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Style images */
+.chat b {
+  float: left;
+  max-width: 60px;
+  width: 100%;
+  margin-right: 20px;
+  border-radius: 50%;
+}
+
+/* Style the right image */
+.chat b.right {
+  float: right;
+  margin-left: 20px;
+  margin-right:0;
+}
+
+/* Style time text */
+.time-right {
+  /* float: right;
+  margin-left: 20px;
+  margin-right:0; */
+  float: right;
+  color: #aaa;
+}
+
+/* Style time text */
+.time-left {
+  float: left;
+  color: #999;
+}
+
+/* .submit-c {
+  width: 100%;
+} */
+
+@media only screen and (max-width: 900px) {
+  .custom-form {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .custom-form label {
+    font-size: 15px;
+  }
 }
