@@ -5,6 +5,7 @@ from chatapp.src.models import User, ChatSchema
 from flask_login import login_user, current_user, logout_user, login_required
 
 @app.route('/')
+@app.route('/home')
 def index():
     return render_template('index.html', title='home')
 
@@ -62,7 +63,7 @@ def chat():
     form = MessageForm()
     if form.validate_on_submit():
         print('message sent!')
-        
+
     return render_template('chat.html', messages=messages, form=form, title='general')
 
 

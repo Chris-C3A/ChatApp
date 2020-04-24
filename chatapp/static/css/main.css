@@ -21,3 +21,40 @@
   width: 90%;
   padding: 10px;
 }
+
+
+.block {
+  display: block;
+  width: 100%;
+  border: none;
+  background-color: #4CAF50;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.send-btn {
+  display: block;
+  width: 50%;
+  border: none;
+  padding: 6px 10px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+}
+
+/* .submit-c {
+  width: 100%;
+} */
+
+@media only screen and (max-width: 900px) {
+  .custom-form {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .custom-form label {
+    font-size: 15px;
+  }
+}

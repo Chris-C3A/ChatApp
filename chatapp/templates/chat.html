@@ -30,7 +30,7 @@
     <form method="POST" action="">
         {{ form.hidden_tag() }}
         <div class="form-row align-items-center messageForm">
-          <div class="col-8">
+          <div class="col-9">
             {% if form.message.errors %}
                 {{ form.message(id="message", class="form-control py-0", placeholder="message") }}
                 <div class="invalid-feedback">
@@ -42,8 +42,8 @@
                 {{ form.message(id="message", class="form-control", placeholder="message") }}
             {% endif %}
               </div>
-              <div class="col-auto">
-                {{ form.submit(class="cus-b btn btn-outline-info btn-rounded waves-effect") }}
+              <div class="col-3">
+                {{ form.submit(class="btn-success send-btn") }}
               </div>
             </div>
     </form>
