@@ -6,7 +6,6 @@ let current_user = $('#current_user').text()
 
 let url = window.location.href.split('/')
 let room_id = url[url.length - 1]
-console.log(room_id)
 
 socket.on( 'connect', () => {
     let form = $( 'form' ).on( 'submit', function( e ) {
