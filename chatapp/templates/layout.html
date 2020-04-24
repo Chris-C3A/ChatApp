@@ -38,7 +38,7 @@
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-user"></i> {{ current_user.username }} </a>
+                    <i class="fas fa-user"></i> <span id="current_user">{{ current_user.username }}</span></a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="#">My account</a>
                     <a class="dropdown-item" href="{{ url_for('logout') }}">Log out</a>
@@ -65,14 +65,17 @@
           </ul>
         </div>
     </nav>
-    <main class="mt-4">
+    <main class="mt-1">
         <div class="container">
             <div class="flash-msgs">
                 {% with msgs = get_flashed_messages(with_categories=true) %}
                     {% if msgs %}
                         {% for category, msg in msgs %}
-                            <div class="alert alert-{{ category }}">
+                            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
                                 {{ msg }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
                         {% endfor %}
                     {% endif %}

@@ -1,7 +1,8 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <div class="message_holder">
+<div class="chat">
+    <div id="messages" class="message_holder overflow-auto" style="overflow-y: scroll; height:500px;">
         <!-- {% if messages %}
             <h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
         {% endif %} -->
@@ -9,28 +10,29 @@
             {% if msg.joined %}
                 <!-- <div>{{msg.author.username}} joined the chat.</div> -->
             {% else %}
-                <div><b style="color:#000">{{msg.author.username}}</b>: {{msg.message}}</div>
+              {% if current_user.username == msg.author.username %}
+              <div class="chat chat-current">
+                <b style="color:#000" class="left">{{msg.author.username}}</b>
+                <p>{{msg.message}}</p>
+                <p class="time-left" style="">{{msg.time_sent.strftime("%Y-%m-%d %H:%M")}}</p>
+              </div>
+              {% else %}
+              <div class="chat chat-darker"><b style="color:#000" class="left">{{msg.author.username}}</b><p>{{msg.message}}</p><p class="time-left" style="">{{msg.time_sent.strftime("%Y-%m-%d %H:%M")}}</p></div>
+              <!-- <div><b style="color:#000">{{msg.author.username}}</b>: {{msg.message}}</div> -->
+              {% endif %}
             {% endif %}
         {% endfor %}
     </div>
-
-    <!-- <form action="" method="POST">
-        <input type="text" class="username" placeholder="User Name"/>
-        <input type="text" class="message" placeholder="Messages"/>
-        <input type="submit"/>
-    </form> -->
-
-    <!-- <div class="input-group mb-3">
-      <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
-      <div class="input-group-append">
-        <button class="btn btn-outline-secondary" type="button">Button</button>
-      </div>
-    </div> -->
-
-    <form method="POST" action="">
+    <form method="POST" action="" style="bottom:0; margin: 0% 0% 10px 0%;">
         {{ form.hidden_tag() }}
-        <div class="form-row align-items-center messageForm">
-          <div class="col-9">
+        <!-- <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Message" aria-label="Message" id="msg">
+              <div class="input-group-append">
+                <button class="btn btn-success" type="submit" id="sendBtn">Send</button>
+              </div>
+        </div> -->
+        <div class="form-row messageForm">
+          <div class="col-10">
             {% if form.message.errors %}
                 {{ form.message(id="message", class="form-control py-0", placeholder="message") }}
                 <div class="invalid-feedback">
@@ -42,11 +44,12 @@
                 {{ form.message(id="message", class="form-control", placeholder="message") }}
             {% endif %}
               </div>
-              <div class="col-3">
+              <div class="col-2">
                 {{ form.submit(class="btn-success send-btn") }}
               </div>
             </div>
     </form>
+</div>
 {% endblock %}
 
 {% block js %}
