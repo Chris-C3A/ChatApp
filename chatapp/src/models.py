@@ -22,7 +22,18 @@ class ChatSchema(db.Model):
     message = db.Column(db.Text, nullable=False)
     time_sent = db.Column(db.DateTime, nullable=False, default=datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    room_id = db.Column(db.Integer, nullable=False, default=1)
+    room_id = db.Column(db.Integer, db.ForeignKey('chat_room.id'), nullable=False)
 
     def __repr__(self):
-        return f"Product('{self.message}', '{self.time_sent}')"
+        return f"ChatSchema('{self.message}', '{self.time_sent}')"
+
+class ChatRoom(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20), unique=True, nullable=False)
+    password = db.Column(db.String(60), nullable=False)
+    messages = db.relationship('ChatSchema', backref='msgs', lazy=True)
+    # add user relationship
+    # users = db.relationship('User', backref='users', lazy=True)
+
+    def __repr__(self):
+        return f"ChatRoom('{self.id}', '{self.name}')"

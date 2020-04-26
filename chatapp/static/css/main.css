@@ -1,3 +1,7 @@
+html, body {
+  height: 100%;
+}
+
 .custom-form {
   width: 60%;
   margin: 0 auto;
@@ -47,6 +51,7 @@
 .chat {
   /* position: relative; */
   /* height: 600px; */
+  /* height: 50%; */
   border: 2px solid #dedede;
   background-color: #f1f1f1;
   border-radius: 5px;

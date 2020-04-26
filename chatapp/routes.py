@@ -1,8 +1,9 @@
 from chatapp import app, socketio, bcrypt, db
 from flask import Flask, render_template, redirect, url_for, flash, request
-from chatapp.src.forms import MessageForm, LoginForm, RegisterForm
-from chatapp.src.models import User, ChatSchema
+from chatapp.src.forms import MessageForm, LoginForm, RegisterForm, CreateRoomForm
+from chatapp.src.models import User, ChatSchema, ChatRoom
 from flask_login import login_user, current_user, logout_user, login_required
+import random
 
 @app.route('/')
 @app.route('/home')
@@ -58,30 +59,63 @@ def reset_request():
 
 
 # @app.route('/chat/general', methods=["POST", "GET"])
-@app.route('/chat/1', methods=["POST", "GET"])
+#TODO no need for this code
+@app.route('/chat/general', methods=["POST", "GET"])
 @login_required
-def chat():
-    messages = ChatSchema.query.order_by(ChatSchema.time_sent).filter_by(room_id=1).all()
+def general_chat():
+    room_id = 10000000
+    # messages = ChatSchema.query.order_by(ChatSchema.time_sent).filter_by(room_id=1).all()
+    room = ChatRoom.query.filter_by(id=room_id).first()
     form = MessageForm()
     if form.validate_on_submit():
         print('message sent!')
 
-    return render_template('chat.html', messages=messages, form=form, title='general')
+    return render_template('chat.html', room=room, form=form, title=room.name)
 
 
 # TODO
 @app.route('/chat/<int:room_id>')
 @login_required
 def room(room_id):
-    messages = ChatSchema.query.order_by(ChatSchema.time_sent).filter_by(room_id=room_id).all()
+    room = ChatRoom.query.filter_by(id=room_id).first()
+    if not room:
+        flash(f'Room of id {room_id} doesn\'t exist!', 'danger')
+        return redirect(url_for('index'))
+
+    # messages = ChatSchema.query.order_by(ChatSchema.time_sent).filter_by(room_id=room_id).all()
     form = MessageForm()
     if form.validate_on_submit():
         print('message sent!')
 
-    return render_template('chat.html', messages=messages, form=form, title='room')
+    return render_template('chat.html', room=room, form=form, title=room.name)
 
 def messageReceived(methods=['GET', 'POST']):
     print('message was received!!!')
+
+@app.route('/chat/create_room', methods=["POST", "GET"])
+@login_required
+def create_room():
+    form = CreateRoomForm()
+    if form.validate_on_submit():
+        generated = False
+        while not generated:
+            generatedID = random.randint(10000000, 99999999)
+            room = ChatRoom.query.filter_by(id=generatedID).first()
+            # check if a room with this id exists
+            if not room:
+                generated = True
+        newRoom = ChatRoom(id=generatedID, name=form.name.data, password=form.password.data)
+        db.session.add(newRoom)
+        db.session.commit()
+        print('---room created---')
+        flash(f'Room {form.name.data} with id of {generatedID} is created!', 'success')
+        return redirect(url_for('index'))
+
+    return render_template('create_room.html', form=form, title='Create Room')
+
+def messageReceived(methods=['GET', 'POST']):
+    print('message was received!')
+
 
 # WebSockets
 @socketio.on('my event')

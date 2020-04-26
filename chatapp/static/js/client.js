@@ -7,6 +7,18 @@ let current_user = $('#current_user').text()
 let url = window.location.href.split('/')
 let room_id = url[url.length - 1]
 
+if (room_id === 'general') {
+  room_id = 10000000
+}
+
+$(document).ready(function() {
+  $(window).resize(function() {
+      var bodyheight = $(window).height();
+      $("#messages").height(`${bodyheight*0.75}px`);
+  }).resize();
+});
+
+
 socket.on( 'connect', () => {
     let form = $( 'form' ).on( 'submit', function( e ) {
         e.preventDefault()

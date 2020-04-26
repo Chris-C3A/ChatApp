@@ -43,3 +43,8 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired(), length(min=8)])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
+
+class CreateRoomForm(FlaskForm):
+    name = StringField('Room Name', validators=[DataRequired()])
+    password = PasswordField('Room Password', validators=[DataRequired(), length(min=8)])
+    submit = SubmitField('Create Room')

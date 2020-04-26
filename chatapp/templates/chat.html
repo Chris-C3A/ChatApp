@@ -1,12 +1,14 @@
 {% extends "layout.html" %}
 
 {% block content %}
+
+<h2 style="text-align: center;">{{ room.name }}</h2>
 <div class="chat">
-    <div id="messages" class="message_holder overflow-auto" style="overflow-y: scroll; height:500px;">
+    <div id="messages" class="message_holder overflow-auto" style="overflow-y: scroll;">
         <!-- {% if messages %}
             <h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
         {% endif %} -->
-        {% for msg in messages %}
+        {% for msg in room.messages %}
             {% if msg.joined %}
                 <!-- <div>{{msg.author.username}} joined the chat.</div> -->
             {% else %}
