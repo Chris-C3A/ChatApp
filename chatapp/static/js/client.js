@@ -38,12 +38,13 @@ socket.on( 'chat'+room_id.toString(), ( msg ) => {
       $( 'div.message_holder' ).append('<div><i style="color:#000">'+msg.user_name+'</i>' + ' joined the chat' + '</div>' )
     }
     if (msg.message && msg['room_id'] == room_id) {
-      if (current_user == msg.user_name) {
-        $( 'div.message_holder' ).append('<div class="chat chat-current"><b style="color:#000" class="left">'+ msg.user_name + '</b><p>'+msg.message+'</p><p class="time-left">'+date+'</p></div>' )
-      } else {
-        // $( 'div.message_holder' ).append('<div><b style="color:#000">'+msg.user_name+'</b>'+ ": " +msg.message+'</div>' )
-        $( 'div.message_holder' ).append('<div class="chat chat-darker"><b style="color:#000" class="left">'+ msg.user_name + '</b><p>'+msg.message+'</p><p class="time-left">'+date+'</p></div>' )
-      }
+      $('div.message_holder').append('<div id="username"><p id="" style="color:#000" style="margin-bottom: 0;"><strong>'+msg.user_name+'</strong><span class="msg-time">'+formatAMPM(new Date)+'</span></p><p style="margin-bottom: 10px;">'+msg.message+'</p></div>')
+      // if (current_user == msg.user_name) {
+      //   $( 'div.message_holder' ).append('<div class="chat chat-current"><b style="color:#000" class="left">'+ msg.user_name + '</b><p>'+msg.message+'</p><p class="time-left">'+date+'</p></div>' )
+      // } else {
+      //   // $( 'div.message_holder' ).append('<div><b style="color:#000">'+msg.user_name+'</b>'+ ": " +msg.message+'</div>' )
+      //   $( 'div.message_holder' ).append('<div class="chat chat-darker"><b style="color:#000" class="left">'+ msg.user_name + '</b><p>'+msg.message+'</p><p class="time-left">'+date+'</p></div>' )
+      // }
     }
     scrollSmoothToBottom('messages', 500)
 })
@@ -87,4 +88,15 @@ function dateNow() {
 
 window.onload = async function() {
   scrollSmoothToBottom("messages", 200)
+}
+
+function formatAMPM(date) {
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  var strTime = hours + ':' + minutes + ' ' + ampm;
+  return strTime;
 }

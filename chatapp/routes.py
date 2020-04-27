@@ -113,6 +113,8 @@ def create_room():
 
     return render_template('create_room.html', form=form, title='Create Room')
 
+@app.route('/chat/')
+
 def messageReceived(methods=['GET', 'POST']):
     print('message was received!')
 
