@@ -1,9 +1,10 @@
 from chatapp import app, socketio, bcrypt, db
-from flask import Flask, render_template, redirect, url_for, flash, request
+from flask import  render_template, redirect, url_for, flash, request
 from chatapp.src.forms import MessageForm, LoginForm, RegisterForm, CreateRoomForm
 from chatapp.src.models import User, ChatSchema, ChatRoom
 from flask_login import login_user, current_user, logout_user, login_required
 import random
+
 
 @app.route('/')
 @app.route('/home')
@@ -59,7 +60,7 @@ def reset_request():
 
 
 # @app.route('/chat/general', methods=["POST", "GET"])
-#TODO no need for this code
+# TODO no need for this code
 @app.route('/chat/general', methods=["POST", "GET"])
 @login_required
 def general_chat():
@@ -89,8 +90,6 @@ def room(room_id):
 
     return render_template('chat.html', room=room, form=form, title=room.name)
 
-def messageReceived(methods=['GET', 'POST']):
-    print('message was received!!!')
 
 @app.route('/chat/create_room', methods=["POST", "GET"])
 @login_required
@@ -113,9 +112,8 @@ def create_room():
 
     return render_template('create_room.html', form=form, title='Create Room')
 
-@app.route('/chat/')
 
-def messageReceived(methods=['GET', 'POST']):
+def message_received(methods=['GET', 'POST']):
     print('message was received!')
 
 
@@ -129,4 +127,4 @@ def handle_my_custom_event(json, methods=['GET', 'POST']):
         db.session.add(newMessage)
         db.session.commit()
         # messages.append(json)
-    socketio.emit('chat' + str(json['room_id']), json, callback=messageReceived)
+    socketio.emit('chat' + str(json['room_id']), json, callback=message_received)

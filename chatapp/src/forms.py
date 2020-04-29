@@ -9,6 +9,7 @@ class MessageForm(FlaskForm):
     message = StringField("", validators=[DataRequired()])
     submit = SubmitField("Send")
 
+
 class RegisterForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), length(min=3, max=20)])
     email = StringField('Email', validators=[DataRequired(), Email()])
@@ -38,11 +39,13 @@ class RegisterForm(FlaskForm):
         if not re.search(regex, password.data):
             raise ValidationError('Password must contain atleast one uppercase, one lowercase, one number, 8 char!')
 
+
 class LoginForm(FlaskForm):
     username_email = StringField('Username/Email', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired(), length(min=8)])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
+
 
 class CreateRoomForm(FlaskForm):
     name = StringField('Room Name', validators=[DataRequired()])

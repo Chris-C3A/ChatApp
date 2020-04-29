@@ -1,11 +1,12 @@
 from datetime import datetime
 from chatapp import db, login_manager
-from flask import app
 from flask_login import UserMixin
+
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -17,6 +18,7 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f"User('{self.username}', '{self.email}')"
 
+
 class ChatSchema(db.Model):
     SID = db.Column(db.Integer, primary_key=True)
     message = db.Column(db.Text, nullable=False)
@@ -26,6 +28,7 @@ class ChatSchema(db.Model):
 
     def __repr__(self):
         return f"ChatSchema('{self.message}', '{self.time_sent}')"
+
 
 class ChatRoom(db.Model):
     id = db.Column(db.Integer, primary_key=True)

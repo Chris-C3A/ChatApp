@@ -15,14 +15,12 @@
               {% if current_user.username == msg.author.username %}
               <!-- <div class="chat"> -->
                 <div id="username" class="curr-user">
-                  <p id="" style="color:#000" style="margin-bottom: 0;"><strong>{{msg.author.username}}</strong><span class="msg-time">{{msg.time_sent.strftime("%I:%M %p")}}</span></p>
-                  <!-- <p class="">{{msg.time_sent.strftime("%I:%M %p")}}</p> -->
+                  <p id="" style="color:#000" style="margin-bottom: 0;"><strong>{{msg.author.username}}</strong><span class="msg-time">{{msg.time_sent.strftime("%-I:%M %p")}}</span></p>
                   <p style="margin-bottom: 10px;">{{msg.message}}</p>
                 </div>
               {% else %}
                 <div id="username">
-                  <p id="" style="color:#000" style="margin-bottom: 0;"><strong>{{msg.author.username}}</strong><span class="msg-time">{{msg.time_sent.strftime("%I:%M %p")}}</span></p>
-                  <!-- <p class="">{{msg.time_sent.strftime("%I:%M %p")}}</p> -->
+                  <p id="" style="color:#000" style="margin-bottom: 0;"><strong>{{msg.author.username}}</strong><span class="msg-time">{{msg.time_sent.strftime("%-I:%M %p")}}</span></p>
                   <p style="margin-bottom: 16px;">{{msg.message}}</p>
                 </div>
               {% endif %}
