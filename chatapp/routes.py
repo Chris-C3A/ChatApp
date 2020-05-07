@@ -5,6 +5,8 @@ from chatapp.src.models import User, ChatSchema, ChatRoom
 from flask_login import login_user, current_user, logout_user, login_required
 import random
 
+# TODO fix sockets communications
+
 
 @app.route('/')
 @app.route('/home')
@@ -66,12 +68,17 @@ def reset_request():
 def general_chat():
     room_id = 10000000
     # messages = ChatSchema.query.order_by(ChatSchema.time_sent).filter_by(room_id=1).all()
-    room = ChatRoom.query.filter_by(id=room_id).first()
+    general_room = ChatRoom.query.filter_by(id=room_id).first()
     form = MessageForm()
     if form.validate_on_submit():
         print('message sent!')
 
-    return render_template('chat.html', room=room, form=form, title=room.name)
+    return render_template('chat.html', room=general_room, form=form, title=general_room.name)
+
+
+def room_login(room):
+    return render_template('room_login.html')
+    # return True
 
 
 # TODO
@@ -82,6 +89,15 @@ def room(room_id):
     if not room:
         flash(f'Room of id {room_id} doesn\'t exist!', 'danger')
         return redirect(url_for('index'))
+
+    if room.password != '':
+        print("login nega")
+        verified = room_login(room)
+        print(verified)
+        if not verified:
+            flash('Password incorrect!', 'danger')
+            return redirect(url_for('index'))
+
 
     # messages = ChatSchema.query.order_by(ChatSchema.time_sent).filter_by(room_id=room_id).all()
     form = MessageForm()
@@ -111,6 +127,13 @@ def create_room():
         return redirect(url_for('index'))
 
     return render_template('create_room.html', form=form, title='Create Room')
+
+
+@app.route('/chat/browse')
+@login_required
+def browse_room():
+    rooms = ChatRoom.query.all()
+    return render_template('browse_room.html', rooms=rooms)
 
 
 def message_received(methods=['GET', 'POST']):
