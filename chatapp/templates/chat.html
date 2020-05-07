@@ -1,24 +1,28 @@
 {% extends "layout.html" %}
 
 {% block content %}
+
+<h2 style="text-align: center;">{{ room.name }}</h2>
 <div class="chat">
-    <div id="messages" class="message_holder overflow-auto" style="overflow-y: scroll; height:500px;">
+    <div id="messages" class="message_holder overflow-auto" style="overflow-y: scroll;">
         <!-- {% if messages %}
             <h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
         {% endif %} -->
-        {% for msg in messages %}
+        {% for msg in room.messages %}
             {% if msg.joined %}
                 <!-- <div>{{msg.author.username}} joined the chat.</div> -->
             {% else %}
               {% if current_user.username == msg.author.username %}
-              <div class="chat chat-current">
-                <b style="color:#000" class="left">{{msg.author.username}}</b>
-                <p>{{msg.message}}</p>
-                <p class="time-left" style="">{{msg.time_sent.strftime("%Y-%m-%d %H:%M")}}</p>
-              </div>
+              <!-- <div class="chat"> -->
+                <div id="username" class="curr-user">
+                  <p id="" style="color:#000" style="margin-bottom: 0;"><strong>{{msg.author.username}}</strong><span class="msg-time">{{msg.time_sent.strftime("%-I:%M %p")}}</span></p>
+                  <p style="margin-bottom: 10px;">{{msg.message}}</p>
+                </div>
               {% else %}
-              <div class="chat chat-darker"><b style="color:#000" class="left">{{msg.author.username}}</b><p>{{msg.message}}</p><p class="time-left" style="">{{msg.time_sent.strftime("%Y-%m-%d %H:%M")}}</p></div>
-              <!-- <div><b style="color:#000">{{msg.author.username}}</b>: {{msg.message}}</div> -->
+                <div id="username">
+                  <p id="" style="color:#000" style="margin-bottom: 0;"><strong>{{msg.author.username}}</strong><span class="msg-time">{{msg.time_sent.strftime("%-I:%M %p")}}</span></p>
+                  <p style="margin-bottom: 16px;">{{msg.message}}</p>
+                </div>
               {% endif %}
             {% endif %}
         {% endfor %}

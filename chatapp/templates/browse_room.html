@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1 style="text-align: center;">Chat Rooms</h1>
+    
+    {% for room in rooms %}    
+        <div class="room">
+            <a href="{{ url_for('room', room_id=room.id)}}"><h3>{{ room.name }}</h3></a>
+        </div>
+    {% endfor %}
+    
+{% endblock %}

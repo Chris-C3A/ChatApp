@@ -1,3 +1,7 @@
+html, body {
+  height: 100%;
+}
+
 .custom-form {
   width: 60%;
   margin: 0 auto;
@@ -47,11 +51,33 @@
 .chat {
   /* position: relative; */
   /* height: 600px; */
+  /* height: 50%; */
   border: 2px solid #dedede;
   background-color: #f1f1f1;
   border-radius: 5px;
   padding: 0 10px;
   margin: 10px 0;
+}
+
+.curr-user {
+  /* float: right; */
+  /* text-align:right */
+  /* position: absolute;
+  right: 0; */
+}
+
+#username p{
+  margin-bottom: 0;
+}
+
+#username p strong{
+  font-size: 20px;
+}
+
+#username p span {
+  margin-left: 10px;
+  color: gray;
+  font-size: 14px;
 }
 
 /* Darker chat container */
